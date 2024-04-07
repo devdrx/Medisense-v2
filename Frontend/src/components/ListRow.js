@@ -58,16 +58,18 @@ export default function ListRow({
     ["Diagnostic_procedure", "physical examination", "0.9998975992202759"],
     ["Lab_value", "unremarkable", "0.958421528339386"],
   ];
+  const chatbotResponse =
+    "Problem Report:\n\nPatient Name: Dev Darshan\nAge: 28\nSex: Male\n\nPast Medical History:\n- Palpitations\n- Asthma\n\nPresenting Complaints:\n- Palpitations for the past 6 weeks\n- Symptoms occur at rest, 2-3 times per week, lasting up to 30 minutes\n- Symptoms associated with dyspnea\n- Grade 2/6 holosystolic tricuspid regurgitation murmur present\n\nRemarks/Inference:\nBased on the patient's symptoms of palpitations, dyspnea, and the presence of tricuspid regurgitation murmur, there may be a possibility of underlying cardiac conditions such as mitral valve prolapse, atrial fibrillation, or ventricular tachycardia. Given the patient's young age and absence of significant physical findings, structural heart disease may be less likely. However, further investigations such as an echocardiogram and a Holter monitor may be warranted to evaluate the extent and cause of the palpitations.\n\nSeverity of Disease Symptom:\nDue to the presence of dyspnea and the potential cardiac involvement, this case should be prioritized for further evaluation and management to rule out any serious cardiac conditions.\n\nStatus: Pending\n\nPlease review the patient's history and consider ordering appropriate investigations to determine the underlying cause of the palpitations and dyspnea. Thank you.";
 
   return (
     <div
       className={
         isOpen
-          ? `card2 border-2 flex flex-col rounded-md border-[#dee8ef] justify-center items-center transition-all ease-in-out duration-150 my-1 p-1 hover:border-[#55a6f6] hover:bg-[#ebf5fe] text-sm text-[hsl(211,15%,35%)] space-x-20`
+          ? `card2 border-2 flex flex-col rounded-md border-[#dee8ef] justify-center items-center transition-all ease-in-out duration-150 my-1 hover:border-[#55a6f6] hover:bg-[#ebf5fe] text-sm text-[hsl(211,15%,35%)] p-11`
           : ""
       }
     >
-      <div className="animate-slidein opacity-0 card2 border-2 flex flex-row rounded-md border-[#dee8ef] justify-between items-center transition-all ease-in-out duration-150 my-5 p-5 hover:border-[#55a6f6] hover:bg-[#ebf5fe] text-sm text-[#4c5967] space-x-20">
+      <div className={`animate-slidein opacity-0 card2 border-2 flex flex-row rounded-md border-[#dee8ef] justify-between items-center transition-all ease-in-out duration-150 my-5 p-5 hover:border-[#55a6f6] hover:bg-[#ebf5fe] text-sm text-[#4c5967] space-x-20 ${isOpen ? "bg-white hover:bg-white ": ""}`}>
         {/* --------------------------------- */}
 
         <div className="one">
@@ -161,13 +163,20 @@ export default function ListRow({
         </div>
         {/* --------------------------------- */}
       </div>
-      {isOpen ? (
-        <div>
-          {response.map((el) => {
-            return <Table el={el} />;
-          })}
-        </div>
-      ) : null}
+      <div className="flex flex-col justify-center items-center">
+        {isOpen ? (
+          <div className="space-y-10">
+            <div className="bg-white rounded-md whitespace-pre-wrap text-left border-2 p-9 flex flex-col justify-center items-center">
+              {chatbotResponse}
+            </div>
+            <div className="">
+              {response.map((el) => {
+                return <Table el={el} />;
+              })}
+            </div>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
